@@ -1,3 +1,4 @@
 {
-    "box-sizing": false
+    "qualified-headings": false,
+    "unique-headings": false
 }
