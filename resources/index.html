@@ -81,16 +81,16 @@
         <dd ng-repeat-end>
             <ol>
                 <li ng-repeat="error in item.errors track by $index">
-                    <cite ng-if="$even" class="text-error">
+                    <cite class="text-error">
                         {{error.message}}
                     </cite>
-                    <pre ng-if="$odd">{{error.evidence}}</pre>
+                    <pre>{{error.evidence}}</pre>
                 </li>
                 <li ng-repeat="error in item.output track by $index">
-                    <cite ng-if="$even" class="text-error">
+                    <cite class="text-error">
                         {{error.message}}
                     </cite>
-                    <pre ng-if="$odd">{{error.evidence}}</pre>
+                    <pre>{{error.evidence}}</pre>
                 </li>
             </ol>
         </dd>

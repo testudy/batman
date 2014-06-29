@@ -7,12 +7,13 @@ function handle(data) {
     var result = [],
         i,
         len;
-    for (i = 0, len = data.length; i < len; i += 1) {
-        result.push({
-            message: data[i],
-            evidence: data[i + 1]
-        });
-        i += 1;
+    for (i = 0, len = data.length; i < len; i += 2) {
+        if (data[i + 1].indexOf('STATUS: Perfect!') === -1) {
+            result.push({
+                message: data[i],
+                evidence: data[i + 1]
+            });
+        }
     }
     return result;
 }
@@ -26,7 +27,9 @@ function lint(callback) {
         recess(files, options, function (error, reports) {
             var report,
                 i,
-                len;
+                len,
+                errors,
+                output;
 
             if (error) {
                 throw error;
@@ -35,11 +38,17 @@ function lint(callback) {
                 for (i = 0, len = reports.length; i < len; i += 1) {
                     report = reports[i];
                     if (report.errors.length || report.output.length) {
+                        errors = handle(report.errors);
+                        output = handle(report.output);
+                    }
+                    if ((errors && errors.length) || (output && output.length)) {
                         result.push({
                             file: report.path,
-                            errors: handle(report.errors),
-                            output: handle(report.output)
+                            errors: errors,
+                            output: output
                         });
+                        errors = null;
+                        output = null;
                     }
                 }
             }
