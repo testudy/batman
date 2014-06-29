@@ -21,6 +21,9 @@ module.exports = {
             config = result;
         }
 
+        // 强制使用默认规则
+        config = {};
+
         return config;
     },
 

@@ -1,4 +1,4 @@
-/*jslint stupid: true*/
+'use strict';
 
 var path = require('path'),
     fs = require('fs'),
@@ -7,29 +7,23 @@ var path = require('path'),
 
 module.exports = {
     load: function () {
-        'use strict';
-
         var defaultConfigPath = path.normalize(path.join(process.env.HOME || process.env.USERPROFILE, '.recessrc')),
             projectConfigPath = path.normalize(path.join(project.getPath(), '.recessrc')),
-            config = {};
+            config = {},
+            result;
 
-
-        try {
-            config = fs.readFileSync(defaultConfigPath, 'utf-8');
-        } catch (ex) {
-            if (defaultConfigPath && ex.code !== 'ENOENT') {
-                console.log('Error reading config file "' + defaultConfigPath + '": ' + ex);
-            }
+        result = project.getOption(defaultConfigPath);
+        if (result) {
+            config = result;
         }
 
-        try {
-            config = fs.readFileSync(projectConfigPath, 'utf-8');
-        } catch (ex) {
-            if (projectConfigPath && ex.code !== 'ENOENT') {
-                console.log('Error reading config file"' + projectConfigPath + '": ' + ex);
-            }
+        result = project.getOption(projectConfigPath);
+        if (result) {
+            config = result;
         }
 
+        // 强制使用默认规则
+        config = {};
         //config.format = 'compact';
         config.noSummary = true;
         config.stripColors = true;
