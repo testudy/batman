@@ -15,8 +15,7 @@ function lint() {
 
     files.forEach(function (file) {
         var content = fs.readFileSync(file, 'utf-8'),
-            result = csslint.verify(content, options),
-            messages = result.messages;
+            messages = csslint.verify(content, options).messages;
 
         if (messages.length) {
             result.push({
