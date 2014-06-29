@@ -4,13 +4,14 @@
   "version": "0.0.1",
   "window": {
     "title": "BATMAN",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 980
   },
   "dependencies": {
-    "jslint": "~0.5.2",
     "csslint": "~0.10.0",
-    "recess": "~1.1.9"
+    "jslint": "~0.5.2",
+    "recess": "~1.1.9",
+    "underscore": "^1.6.0"
   }
 }

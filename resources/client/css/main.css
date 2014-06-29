@@ -11,6 +11,7 @@
 
 .batman-form .input-append input[type=text] {
     flex: 1;
+    table: 2;
 }
 
 .batman-form .input-append .add-on {

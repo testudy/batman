@@ -49,9 +49,10 @@
             $scope.render.recess = null;
             if ($scope.Info.recess) {
                 Recess.lint(function (result) {
+                console.log(result);
                     $scope.render.recess = result;
-                    $scope.$apply();
                     isPerfect();
+                    $scope.$apply();
                 });
             } else {
                 isPerfect();
