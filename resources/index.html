@@ -7,6 +7,18 @@
     <link href="client/css/main.css" rel="stylesheet" />
 </head>
 <body class="container" ng-controller="MainCtrl">
+    <div ng-show="isBefore" class="alert alert-info batman-alert">
+        <strong>Heads up!</strong> 开始检查代码质量吧!
+    </div>
+
+    <div ng-hide="isBefore || isPerfect" class="alert alert-warning batman-alert">
+        <strong>Warning!</strong> 按下面的提示信息修改代码！
+    </div>
+
+    <div ng-show="isPerfect" class="alert alert-success batman-alert">
+        <strong>Perfect!</strong> 代码质量检查通过!
+    </div>
+
     <form
         id="frmInfo"
         name="frmInfo"
@@ -49,14 +61,6 @@
                 class="btn btn-primary pull-right">Go</button>
         </div>
     </form>
-
-    <div ng-show="isBefore" class="alert alert-info">
-        <strong>Heads up!</strong> 开始检查代码质量吧!
-    </div>
-
-    <div ng-show="isPerfect" class="alert alert-success">
-        <strong>Perfect!</strong>
-    </div>
 
     <dl class="batman-result">
         <dt ng-repeat-start="item in render.jslint" class="text-warning">{{item.file}}</dt>
