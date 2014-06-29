@@ -1,0 +1,49 @@
+.batman-form {
+    margin-top: 20px;
+}
+
+.batman-form .input-append {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.batman-form .input-append input[type=text] {
+    flex: 1;
+}
+
+.batman-form .input-append .add-on {
+    width: 60px;
+}
+
+.batman-form .input-append input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: block;
+    width: 72px;
+    height: 30px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.batman-form .btn-primary {
+    width: 72px;
+}
+
+.batman-result dd {
+    margin-left: 0;
+}
+
+.batman-result dd cite {
+    display: block;
+}
+
+.batman-result dd cite address{
+    margin-bottom: 0;
+}
+
+.batman-result dd cite strong {
+    text-transform: capitalize;
+}

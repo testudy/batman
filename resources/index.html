@@ -1,0 +1,107 @@
+<!doctype html>
+<html ng-app="batmanApp">
+<head>
+    <title>Batman —— 查查试试，必须通过！</title>
+    <meta charset="utf-8" />
+    <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="client/css/main.css" rel="stylesheet" />
+</head>
+<body class="container" ng-controller="MainCtrl">
+    <form
+        id="frmInfo"
+        name="frmInfo"
+        ng-submit="lint()"
+        class="batman-form">
+        <div class="control-group" ng-class="{warning:frmInfo.directory.$dirty && frmInfo.directory.$error.required}">
+            <div class="input-append">
+                <input
+                    type="text"
+                    name="directory"
+                    ng-model="Info.directory"
+                    required
+                    placeholder="请输入项目目录路径">
+                <input
+                    type="file"
+                    ng-model="Info.directory"
+                    batman-directory
+                    webkitdirectory />
+                <span class="add-on">浏览</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="checkbox inline">
+                <input
+                    type="checkbox"
+                    ng-model="Info.jslint">jslint
+            </label>
+            <label class="checkbox inline">
+                <input
+                    type="checkbox"
+                    ng-model="Info.csslint">csslint
+            </label>
+            <label class="checkbox inline">
+                <input
+                    type="checkbox"
+                    ng-model="Info.recess">recess
+            </label>
+            <button type="submit"
+                ng-disabled="isLinting || frmInfo.$invalid"
+                class="btn btn-primary pull-right">Go</button>
+        </div>
+    </form>
+
+    <dl class="batman-result">
+        <dt ng-repeat-start="item in render.jslint" class="text-warning">{{item.file}}</dt>
+        <dd ng-repeat-end>
+            <ol>
+                <li ng-repeat="error in item.errors">
+                    <cite class="text-error">
+                        <address class="text-info pull-right">line {{error.line}} character {{error.character}}</address>
+                        {{error.reason}}
+                    </cite>
+                    <pre>{{error.evidence}}</pre>
+                </li>
+            </ol>
+        </dd>
+
+        <dt ng-repeat-start="item in render.csslint" class="text-warning">{{item.file}}</dt>
+        <dd ng-repeat-end>
+            <ol>
+                <li ng-repeat="error in item.errors">
+                    <cite class="text-error">
+                        <address class="text-info pull-right">line {{error.line}} character {{error.col}}</address>
+                        <strong>[{{error.type}}]</strong> {{error.message}}
+                    </cite>
+                    <pre>{{error.evidence}}</pre>
+                </li>
+            </ol>
+        </dd>
+
+        <dt ng-repeat-start="item in render.recess" class="text-warning">{{item.file}}</dt>
+        <dd ng-repeat-end>
+            <ol>
+                <li ng-repeat="error in item.errors track by $index">
+                    <cite ng-if="$even" class="text-error">
+                        {{error.message}}
+                    </cite>
+                    <pre ng-if="$odd">{{error.evidence}}</pre>
+                </li>
+                <li ng-repeat="error in item.output track by $index">
+                    <cite ng-if="$even" class="text-error">
+                        {{error.message}}
+                    </cite>
+                    <pre ng-if="$odd">{{error.evidence}}</pre>
+                </li>
+            </ol>
+        </dd>
+    </dl>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="client/js/app.js"></script>
+    <script src="client/js/directives/directory.js"></script>
+    <script src="client/js/services/jslint.js"></script>
+    <script src="client/js/services/csslint.js"></script>
+    <script src="client/js/services/recess.js"></script>
+    <script src="client/js/controllers/main.js"></script>
+</body>
+</html>
