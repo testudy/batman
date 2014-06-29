@@ -10,6 +10,9 @@
             recess: null
         };
 
+        $scope.isBefore = true;
+        $scope.isPerfect = false;
+
         $scope.Info = {
             directory: '',
             jslint: true,
@@ -17,7 +20,20 @@
             recess: true
         };
 
+        function isPerfect() {
+            var render = $scope.render;
+            if ((!render.jslint || (render.jslint && render.jslint.length === 0)) &&
+                    (!render.csslint || (render.csslint && render.csslint.length === 0)) &&
+                    (!render.recess || (render.recess && render.recess.length === 0))) {
+
+                $scope.isPerfect = true;
+            } else {
+                $scope.isPerfect = false;
+            }
+        }
+
         $scope.lint = function () {
+            $scope.isBefore = false;
             project.setPath($scope.Info.directory);
 
             $scope.render.jslint = null;
@@ -35,7 +51,10 @@
                 Recess.lint(function (result) {
                     $scope.render.recess = result;
                     $scope.$apply();
+                    isPerfect();
                 });
+            } else {
+                isPerfect();
             }
         };
     }]);

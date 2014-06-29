@@ -50,6 +50,14 @@
         </div>
     </form>
 
+    <div ng-show="isBefore" class="alert alert-info">
+        <strong>Heads up!</strong> 开始检查代码质量吧!
+    </div>
+
+    <div ng-show="isPerfect" class="alert alert-success">
+        <strong>Perfect!</strong>
+    </div>
+
     <dl class="batman-result">
         <dt ng-repeat-start="item in render.jslint" class="text-warning">{{item.file}}</dt>
         <dd ng-repeat-end>
