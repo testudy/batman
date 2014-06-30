@@ -27,6 +27,7 @@ module.exports = {
         //config.format = 'compact';
         config.noSummary = true;
         config.stripColors = true;
+        config.noIDs = false;
 
         return config;
     },
