@@ -94,9 +94,10 @@
             <ol>
                 <li ng-repeat="error in item.errors track by $index">
                     <cite class="text-error">
-                        {{error.message}}
+                        <address class="text-info pull-right">line {{error.line}} character {{error.column}}</address>
+                        <strong>[Error {{error.type}}]</strong> {{error.message}}
                     </cite>
-                    <pre ng-if="error.evidence">{{error.evidence}}</pre>
+                    <pre>{{error.evidence}}</pre>
                 </li>
                 <li ng-repeat="error in item.output track by $index">
                     <cite class="text-error">

@@ -2,33 +2,57 @@
 
 var recess = require('recess'),
     config = require('./config');
+function handleError(data) {
+    var i,
+        len,
+        item;
 
-function handle(data) {
+    for (i = 0, len = data.length; i < len; i += 1) {
+        item = data[i];
+        if (item.extract) {
+            item.evidence = item.extract.join('\n');
+        }
+    }
+    return data;
+}
+
+function handleOutput(data) {
     var result = [],
         i,
         len,
-        message,
-        evidence,
-        re = /^\s*\d+\./;
+        text,
+        item = null,
+        cRE = /^\s*\d+\./,
+        sRE = /^\s+$/;
 
     for (i = 0, len = data.length; i < len; i += 1) {
-        message = data[i];
-        evidence = data[i + 1];
+        text = data[i];
 
-        if (evidence.indexOf('STATUS: Perfect!') !== -1) {
-            break;
+        if (!sRE.test(text)) {
+            if (text.indexOf('STATUS: Perfect!') !== -1) {
+                item = null;
+                break;
+            }
+
+            if (!cRE.test(text)) {
+                if (item) {
+                    item.evidence = item.evidence.join('\n');
+                    result.push(item);
+                }
+                item = {
+                    message: text,
+                    evidence: []
+                };
+            } else {
+                item.evidence.push(text);
+            }
         }
+    }
 
-        if (evidence && re.test(evidence)) {
-            i += 1;
-        } else {
-            evidence = '';
-        }
-
-        result.push({
-            message: message,
-            evidence: evidence
-        });
+    if (item) {
+        item.evidence = item.evidence.join('\n');
+        result.push(item);
+        item = null;
     }
     return result;
 }
@@ -49,15 +73,15 @@ function lint(callback) {
             if (error && !reports) {
                 throw error;
             }
-            console.log(reports);
+
             if (reports && reports.length) {
                 for (i = 0, len = reports.length; i < len; i += 1) {
                     report = reports[i];
                     if (report.errors.length) {
-                        errors = handle(report.errors);
+                        errors = handleError(report.errors);
                     }
                     if (report.output.length) {
-                        output = handle(report.output);
+                        output = handleOutput(report.output);
                     }
                     if ((errors && errors.length) || (output && output.length)) {
                         result.push({
