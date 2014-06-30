@@ -1,5 +1,6 @@
 {
     "qualified-headings": false,
     "unique-headings": false,
-    "ids": false
+    "ids": false,
+    "duplicate-background-images": false
 }
