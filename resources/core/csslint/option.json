@@ -2,5 +2,8 @@
     "qualified-headings": false,
     "unique-headings": false,
     "ids": false,
-    "duplicate-background-images": false
+    "duplicate-background-images": false,
+    "box-model": false,
+    "floats": false,
+    "font-sizes": false
 }
